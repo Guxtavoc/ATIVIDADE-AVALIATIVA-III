@@ -10,7 +10,6 @@ void menu(){
         scanf("%d", &op);
         switch(op){
             case 1:
-                printf("Definicao da expressao\n");
                 converterExpressao();
                 break;
             case 2:

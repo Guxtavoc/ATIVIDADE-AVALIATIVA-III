@@ -50,16 +50,3 @@ void destroi(Pilha *p){
     free(*p);
     *p = NULL;
 }
-int prio(char op){
-    switch(op){
-        case '(':
-        return 0;
-        case '-':
-        case '+':
-        return 1;
-        case '*':
-        case '/':
-        return 2;
-    }
-    return -1;
-}
