@@ -19,32 +19,37 @@ int prio(char op){
     }
     return -1;
 }
-void converterExpressao(char posfixa[],char expressao[]){//Completa
+void converterExpressao(char posfixa[],char expressao[]){
     int tamanho,j=0;
     tamanho=(int)strlen(expressao);
-    Pilha p=criarPilha(tamanho);//cria uma pilha com o tamanho da expressao
+    Pilha p=criarPilha(tamanho);
     for(int i=0;i<tamanho;i++){
-        if(expressao[i]=='('){//se acha um parenteses abrindo, empilha
+        if(expressao[i]=='('){//Se acha um parêntese abrindo, empilha
             empilha(expressao[i],p);
-        }else if(expressao[i]==')'){//se acha um parenteses fechando, desempilha ate achar o parenteses abrindo
-            while(topo(p)!='('){
+        }else if(expressao[i]==')'){//Se acha um parêntese fechando, desempilha até achar o parêntese abrindo
+            while(!vazio(p)&&topo(p)!='(') { 
                 posfixa[j++]=desempilha(p);
             }
-            desempilha(p);//Remove ( da pilha
-        }else if(expressao[i]=='+'||expressao[i]=='-'||expressao[i]=='*'||expressao[i]=='/'){//se acha um operador, desempilha ate achar um operador de menor prioridade
-            while(!vazio(p)&&prio(topo(p))>=prio(expressao[i])){//enquanto a pilha nao estiver vazia e o operador do topo da pilha for de maior ou igual prioridade
+            if(!vazio(p)){// Garante que há um '(' para desempilhar
+                desempilha(p);
+            }
+        }else if(expressao[i]=='+'||expressao[i]=='-'||expressao[i]=='*'||expressao[i]=='/'){ 
+            //Se acha um operador, desempilha até achar um operador de menor prioridade
+            while(!vazio(p)&&prio(topo(p))>=prio(expressao[i])){
                 posfixa[j++]=desempilha(p);
             }
             empilha(expressao[i],p);
-        } else {//se acha um operando, imprime
+        }else if(isalnum(expressao[i])){// Se acha um operando, imprime
             posfixa[j++]=expressao[i];
         }
     }
-    while(!vazio(p)){
+    while(!vazio(p)){//Desempilha qualquer operador restante
         posfixa[j++]=desempilha(p);
     }
+    posfixa[j]='\0';// Adiciona o terminador de string
     destroi(&p);
 }
+
 variaveis* recebeVariaveis(char posfixa[]){//Completa, Ajustada para diferenciar variáveis minusculas e maiusculas
     variaveis *letra=NULL;
     int qtd=0;
@@ -73,16 +78,13 @@ variaveis* recebeVariaveis(char posfixa[]){//Completa, Ajustada para diferenciar
 }
 float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){//Completa
     Pilhaf p=criarPilhaf(256);
-    int tamanho=(int)strlen(posfixa),cont=0;
-    printf("qtdVariaveis = %d\n",qtdVariaveis);//debug
-    printf("tamamho = %d\n",tamanho);//debug
+    int tamanho=(int)strlen(posfixa);
     for(int i=0;i<tamanho;){
         if(isalpha(posfixa[i])&&posfixa[i]!='\0'){//Se achar uma letra, empilha o valor correspondente
             for(int j=0;j<qtdVariaveis;j++){
                 if(letra[j].variavel==posfixa[i]&&letra[j].variavel!='\0'){
                     empilhaf(letra[j].valor,p);
                     printf("iteracao %d Empilhando %c = %.2f\n",i,letra[j].variavel,letra[j].valor);
-                    cont++;
                     break;
                 }
             }
@@ -95,23 +97,19 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){//Comp
                 case '+':
                 empilhaf(b+a,p);
                 printf("iteracao %d Empilhando %.2f+%.2f, Topo = %.2f\n",i,
-                    b,a,topof(p));
-                cont++;
+                b,a,topof(p));
                 break;
                 case '-':
                 empilhaf(b-a,p);
-                printf("iteracao %d Empilhando %.2f-%.2f, Topo = %.2f\n",i,b-a,topof(p));
-                cont++;
+                printf("iteracao %d Empilhando %.2f-%.2f, Topo = %.2f\n",i,b,a,topof(p));
                 break;
                 case '*':
                 empilhaf(b*a,p);
                 printf("iteracao %d Empilhando %.2f*%.2f, Topo = %.2f\n",i,b,a,topof(p));
-                cont++;
                 break;
                 case '/':
                 empilhaf(b/a,p);
                 printf("iteracao %d Empilhando %.2f/%.2f, Topo = %.2f\n",i,b,a,topof(p));
-                cont++;
                 break;
             }
             i++;
@@ -119,7 +117,6 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){//Comp
             i++;
         }
     }
-    printf("cont = %d\n",cont);//debug
     float resultado=desempilhaf(p);
     destroif(&p);
     return resultado;
