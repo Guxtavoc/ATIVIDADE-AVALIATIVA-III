@@ -58,6 +58,8 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "stdio.h": "c",
-    "funcoesEspecificas.C": "cpp"
+    "funcoesEspecificas.C": "cpp",
+    "funcoespilha2.h": "c",
+    "string.h": "c"
   }
 }

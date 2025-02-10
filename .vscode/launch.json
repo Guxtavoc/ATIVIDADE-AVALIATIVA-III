@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/gusta/OneDrive/Área de Trabalho/IFMT/terceiro semestre/Estrutura de dados/ATIVIDADE AVALIATIVA III",
-      "program": "c:/Users/gusta/OneDrive/Área de Trabalho/IFMT/terceiro semestre/Estrutura de dados/ATIVIDADE AVALIATIVA III/build/Debug/outDebug",
+      "program": "c:/Users/gusta/OneDrive/Área de Trabalho/IFMT/terceiro semestre/Estrutura de dados/ATIVIDADE AVALIATIVA III/build/Release/outRelease",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

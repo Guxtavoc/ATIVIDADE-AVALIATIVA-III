@@ -1,51 +1,51 @@
-#include "funcoesPilha.h"
+#include "funcoesPilhaf.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int vazio(Pilha P){
+int vaziof(Pilhaf P){
     if(P->topo==-1)
         return 1;
     else 
         return 0;
 }
-int cheio(Pilha P){
+int cheiof(Pilhaf P){
     if(P->topo==P->max-1)
         return 1;
     else 
         return 0;
 }
-Pilha criarPilha(int n){
-    Pilha P=malloc(sizeof(struct pilha));
+Pilhaf criarPilhaf(int n){
+    Pilhaf P=malloc(sizeof(struct pilhaf));
     P->max=n;
     P->topo=-1;
-    P->item=malloc((size_t)n*sizeof(Itemp));
+    P->item=malloc((size_t)n*sizeof(Itemf));
     return P;
 }
-void empilha(Itemp x,Pilha P){
-    if(cheio(P)){
+void empilhaf(Itemf x,Pilhaf P){
+    if(cheiof(P)){
         printf("Pilha cheia!\n");
         return;
     }
     P->topo++;
     P->item[P->topo] = x;
 }
-Itemp desempilha(Pilha P){
-    if(!vazio(P)){
-    Itemp x=P->item[P->topo];
+Itemf desempilhaf(Pilhaf P){
+    if(!vaziof(P)){
+    Itemf x=P->item[P->topo];
     P->topo--;
     return x;
     }else
     printf("Pilha vazia\n");
         return 0;
 }
-Itemp topo(Pilha P){
-    if(vazio(P)){
+Itemf topof(Pilhaf P){
+    if(vaziof(P)){
         printf("pilha vazia!\n");
         return 0;
     }
     return P->item[P->topo];
 }
-void destroi(Pilha *p){
+void destroif(Pilhaf *p){
     free((*p)->item);
     free(*p);
     *p = NULL;
