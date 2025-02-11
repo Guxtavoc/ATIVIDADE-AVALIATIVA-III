@@ -6,7 +6,7 @@
 void menu(){
     int op;
     char posfixa[256],expressao[256];
-    posfixa[0]='\0';//inicializando a string para evitar lixo
+    posfixa[0]='\0';
     variaveis *letra=NULL;
     do{
         printf("1 - Definicao da expressao\n2 - definicao do valor das variaveis\n3 - Avaliacao da expressao\n0 - Sair\n");
@@ -14,7 +14,7 @@ void menu(){
         scanf("%d", &op);
         switch(op){
             case 1:
-                do {//loop para receber a expressao
+                do {
                     printf("Digite a expressao: ");
                     scanf("%s",expressao);
                     printf("A expressao: %s esta correta?\n",expressao);
@@ -23,6 +23,7 @@ void menu(){
                 }while(op!=1);
                 strcpy(posfixa,expressao);
                 converterExpressao(posfixa,expressao);
+                letra=NULL;
                 break;
             case 2:
             if(strlen(posfixa)!=0){

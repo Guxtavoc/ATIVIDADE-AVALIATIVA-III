@@ -1,11 +1,9 @@
-typedef float Itemf;//Declaração 
-
+typedef float Itemf;
 typedef struct pilhaf{
-    int max;//Numero maximo de itens na pilha
-    int topo;//POSIÇÃO do item que está no topo
-    Itemf *item;//Vetor ou lista de elementos contidos na pilha
+    int max;
+    int topo;
+    Itemf *item;
 }*Pilhaf;
-
 int vaziof(Pilhaf P);
 int cheiof(Pilhaf P);
 Pilhaf criarPilhaf(int n);

@@ -1,7 +1,6 @@
 #include "funcoesPilha.h"
 #include <stdio.h>
 #include <stdlib.h>
-
 int vazio(Pilha P){
     if(P->topo==-1)
         return 1;

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
 int prio(char op){
     switch(op){
         case '(':
@@ -24,39 +23,38 @@ void converterExpressao(char posfixa[],char expressao[]){
     tamanho=(int)strlen(expressao);
     Pilha p=criarPilha(tamanho);
     for(int i=0;i<tamanho;i++){
-        if(expressao[i]=='('){//Se acha um parêntese abrindo, empilha
+        if(expressao[i]=='('){
             empilha(expressao[i],p);
-        }else if(expressao[i]==')'){//Se acha um parêntese fechando, desempilha até achar o parêntese abrindo
+        }else if(expressao[i]==')'){
             while(!vazio(p)&&topo(p)!='(') { 
                 posfixa[j++]=desempilha(p);
             }
-            if(!vazio(p)){// Garante que há um '(' para desempilhar
+            if(!vazio(p)){
                 desempilha(p);
             }
         }else if(expressao[i]=='+'||expressao[i]=='-'||expressao[i]=='*'||expressao[i]=='/'){ 
-            //Se acha um operador, desempilha até achar um operador de menor prioridade
             while(!vazio(p)&&prio(topo(p))>=prio(expressao[i])){
                 posfixa[j++]=desempilha(p);
             }
             empilha(expressao[i],p);
-        }else if(isalnum(expressao[i])){// Se acha um operando, imprime
+        }else if(isalnum(expressao[i])){
             posfixa[j++]=expressao[i];
         }
     }
-    while(!vazio(p)){//Desempilha qualquer operador restante
+    while(!vazio(p)){
         posfixa[j++]=desempilha(p);
     }
-    posfixa[j]='\0';// Adiciona o terminador de string
+    posfixa[j]='\0';
     destroi(&p);
 }
 
-variaveis* recebeVariaveis(char posfixa[]){//Completa, Ajustada para diferenciar variáveis minusculas e maiusculas
+variaveis* recebeVariaveis(char posfixa[]){
     variaveis *letra=NULL;
     int qtd=0;
     int tamanho=(int)strlen(posfixa);
     for(int i=0;i<tamanho;i++){
-        if(isalpha(posfixa[i])){//Verifica se é uma letra
-            int existe=0;//Redefine a variável para 0
+        if(isalpha(posfixa[i])){
+            int existe=0;
             for(int j=0;j<qtd;j++){
                 if(letra[j].variavel==posfixa[i]){
                     existe=1;
@@ -76,11 +74,11 @@ variaveis* recebeVariaveis(char posfixa[]){//Completa, Ajustada para diferenciar
     letra->qnt=qtd;
     return letra;
 }
-float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){//Completa
+float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
     Pilhaf p=criarPilhaf(256);
     int tamanho=(int)strlen(posfixa);
     for(int i=0;i<tamanho;){
-        if(isalpha(posfixa[i])&&posfixa[i]!='\0'){//Se achar uma letra, empilha o valor correspondente
+        if(isalpha(posfixa[i])&&posfixa[i]!='\0'){
             for(int j=0;j<qtdVariaveis;j++){
                 if(letra[j].variavel==posfixa[i]&&letra[j].variavel!='\0'){
                     empilhaf(letra[j].valor,p);
@@ -89,7 +87,7 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){//Comp
                 }
             }
             i++;
-        }else if((posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/')&&posfixa[i]!='\0'){//Se achar um operador, desempilha dois valores e empilha o resultado
+        }else if((posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/')&&posfixa[i]!='\0'){
             float a=desempilhaf(p);
             float b=desempilhaf(p);
             printf("operador %c encontrado, desempilhando b = %.2f e a = %.2f\n",posfixa[i],b,a);

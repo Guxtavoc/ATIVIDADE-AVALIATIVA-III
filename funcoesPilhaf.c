@@ -1,7 +1,6 @@
 #include "funcoesPilhaf.h"
 #include <stdio.h>
 #include <stdlib.h>
-
 int vaziof(Pilhaf P){
     if(P->topo==-1)
         return 1;

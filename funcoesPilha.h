@@ -1,12 +1,9 @@
-
-typedef char Itemp;//Declaração 
-
+typedef char Itemp;
 typedef struct pilha{
-    int max;//Numero maximo de itens na pilha
-    int topo;//POSIÇÃO do item que está no topo
-    Itemp *item;//Vetor ou lista de elementos contidos na pilha
+    int max;
+    int topo;
+    Itemp *item;
 }*Pilha;
-
 int vazio(Pilha P);
 int cheio(Pilha P);
 Pilha criarPilha(int n);
