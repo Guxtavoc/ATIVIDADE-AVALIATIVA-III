@@ -31,6 +31,11 @@ void converterExpressao(char posfixa[],char expressao[]){
             }
             if(!vazio(p)){
                 desempilha(p);
+            }else{
+                printf("Expressao invalida - Parentese sem par\n");
+                posfixa[0]='\0';
+                destroi(&p);
+                return;
             }
         }else if(expressao[i]=='+'||expressao[i]=='-'||expressao[i]=='*'||expressao[i]=='/'){ 
             while(!vazio(p)&&prio(topo(p))>=prio(expressao[i])){
@@ -45,9 +50,37 @@ void converterExpressao(char posfixa[],char expressao[]){
         posfixa[j++]=desempilha(p);
     }
     posfixa[j]='\0';
+    printf("Expressao posfixa: %s\n",posfixa);//debug
+    if(posfixa[j-1]=='('){
+        printf("Expressao invalida - Parentese sem par\n");
+        posfixa[0]='\0';
+        destroi(&p);
+        return;
+    }
+    if(posfixa[j-1]=='+'||posfixa[j-1]=='-'||posfixa[j-1]=='*'||posfixa[j-1]=='/'){
+    }else{
+        printf("Expressao invalida - Falta operador binario 3\n");
+        posfixa[0]='\0';
+        destroi(&p);
+        return;
+    }
+    int operando= 0,operador=0;
+    for(int i=0;i<j;i++){
+        if(isalpha(posfixa[i])){
+            operando++;
+        }else if(posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/'){
+            operador++;
+            if(operando<2){
+                printf("Expressao invalida - Falta operador binario 2\n");
+                posfixa[0]='\0';
+                destroi(&p);
+                return;
+            }
+            operando--;
+        }
+    }
     destroi(&p);
 }
-
 variaveis* recebeVariaveis(char posfixa[]){
     variaveis *letra=NULL;
     int qtd=0;
@@ -62,7 +95,7 @@ variaveis* recebeVariaveis(char posfixa[]){
                 }
             }
             if(!existe){
-                variaveis *temp=(variaveis*)realloc(letra, (size_t)(qtd + 1)*sizeof(variaveis));//Utilizar variavel auxialiar para realocar a memória para evitar bugs
+                variaveis *temp=(variaveis*)realloc(letra, (size_t)(qtd + 1)*sizeof(variaveis));
                 letra=temp;
                 letra[qtd].variavel=posfixa[i];
                 printf("Digite o valor de %c: ",letra[qtd].variavel);

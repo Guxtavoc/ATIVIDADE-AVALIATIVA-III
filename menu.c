@@ -15,6 +15,7 @@ void menu(){
         switch(op){
             case 1:
                 do {
+                    printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * /\n");
                     printf("Digite a expressao: ");
                     scanf("%s",expressao);
                     printf("A expressao: %s esta correta?\n",expressao);
@@ -34,12 +35,15 @@ void menu(){
             }
                 break;
             case 3:
-                printf("Avaliacao da expressao\n");
                 if(strlen(posfixa)!=0&&letra!=NULL){
                     float resultado=avaliaExpressao(posfixa,letra,letra->qnt);
                     printf("Resultado: %.2f\n",resultado);
                 }else{
-                    printf("Defina a expressao e as variaveis primeiro\n");
+                    if(strlen(posfixa)==0){
+                        printf("Defina a expressao primeiro\n");
+                }else{
+                    printf("Defina as variaveis primeiro\n");
+                }
                 }
                 break;
             case 0:
