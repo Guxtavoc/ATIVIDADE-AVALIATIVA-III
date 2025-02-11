@@ -14,8 +14,8 @@ void menu(){
         scanf("%d", &op);
         switch(op){
             case 1:
+                printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * /\n");
                 do {
-                    printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * /\n");
                     printf("Digite a expressao: ");
                     scanf("%s",expressao);
                     printf("A expressao: %s esta correta?\n",expressao);

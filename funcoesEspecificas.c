@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+int verificaPosfixa(char posfixa[]);
 int prio(char op){
     switch(op){
         case '(':
@@ -50,34 +52,11 @@ void converterExpressao(char posfixa[],char expressao[]){
         posfixa[j++]=desempilha(p);
     }
     posfixa[j]='\0';
-    printf("Expressao posfixa: %s\n",posfixa);//debug
-    if(posfixa[j-1]=='('){
-        printf("Expressao invalida - Parentese sem par\n");
-        posfixa[0]='\0';
-        destroi(&p);
-        return;
-    }
-    if(posfixa[j-1]=='+'||posfixa[j-1]=='-'||posfixa[j-1]=='*'||posfixa[j-1]=='/'){
+    int erro=verificaPosfixa(posfixa);
+    if(erro==1){
+        printf("Expressao posfixa: %s\n",posfixa);
     }else{
-        printf("Expressao invalida - Falta operador binario 3\n");
         posfixa[0]='\0';
-        destroi(&p);
-        return;
-    }
-    int operando= 0,operador=0;
-    for(int i=0;i<j;i++){
-        if(isalpha(posfixa[i])){
-            operando++;
-        }else if(posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/'){
-            operador++;
-            if(operando<2){
-                printf("Expressao invalida - Falta operador binario 2\n");
-                posfixa[0]='\0';
-                destroi(&p);
-                return;
-            }
-            operando--;
-        }
     }
     destroi(&p);
 }
@@ -115,7 +94,6 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
             for(int j=0;j<qtdVariaveis;j++){
                 if(letra[j].variavel==posfixa[i]&&letra[j].variavel!='\0'){
                     empilhaf(letra[j].valor,p);
-                    printf("iteracao %d Empilhando %c = %.2f\n",i,letra[j].variavel,letra[j].valor);
                     break;
                 }
             }
@@ -123,24 +101,18 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
         }else if((posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/')&&posfixa[i]!='\0'){
             float a=desempilhaf(p);
             float b=desempilhaf(p);
-            printf("operador %c encontrado, desempilhando b = %.2f e a = %.2f\n",posfixa[i],b,a);
             switch(posfixa[i]){
                 case '+':
                 empilhaf(b+a,p);
-                printf("iteracao %d Empilhando %.2f+%.2f, Topo = %.2f\n",i,
-                b,a,topof(p));
                 break;
                 case '-':
                 empilhaf(b-a,p);
-                printf("iteracao %d Empilhando %.2f-%.2f, Topo = %.2f\n",i,b,a,topof(p));
                 break;
                 case '*':
                 empilhaf(b*a,p);
-                printf("iteracao %d Empilhando %.2f*%.2f, Topo = %.2f\n",i,b,a,topof(p));
                 break;
                 case '/':
                 empilhaf(b/a,p);
-                printf("iteracao %d Empilhando %.2f/%.2f, Topo = %.2f\n",i,b,a,topof(p));
                 break;
             }
             i++;
@@ -151,4 +123,33 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
     float resultado=desempilhaf(p);
     destroif(&p);
     return resultado;
+}
+int verificaPosfixa(char posfixa[]){
+    int j=(int)strlen(posfixa);
+    if(posfixa[j-1]=='('){
+        printf("Expressao invalida - Parentese sem par\n");
+        posfixa[0]='\0';
+        return 0;
+    }
+    if(posfixa[j-1]=='+'||posfixa[j-1]=='-'||posfixa[j-1]=='*'||posfixa[j-1]=='/'){
+    }else{
+        printf("Expressao invalida - Falta operador binario\n");
+        posfixa[0]='\0';
+        return 0;
+    }
+    int operando= 0,operador=0;
+    for(int i=0;i<j;i++){
+        if(isalpha(posfixa[i])){
+            operando++;
+        }else if(posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/'){
+            operador++;
+            if(operando<2){
+                printf("Expressao invalida - Falta operador binario\n");
+                posfixa[0]='\0';
+                return 0;
+            }
+            operando--;
+        }
+    }
+    return 1;
 }
