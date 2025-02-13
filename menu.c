@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 void menu(){
     int op;
     char posfixa[256],expressao[256];
@@ -14,7 +15,7 @@ void menu(){
         scanf("%d", &op);
         switch(op){
             case 1:
-                printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * /\n");
+                printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * / ^ #\n");
                 do {
                     printf("Digite a expressao: ");
                     scanf("%s",expressao);
@@ -37,7 +38,12 @@ void menu(){
             case 3:
                 if(strlen(posfixa)!=0&&letra!=NULL){
                     float resultado=avaliaExpressao(posfixa,letra,letra->qnt);
-                    printf("Resultado: %.2f\n",resultado);
+                    if(isnan(resultado)){
+                        printf("Erro na expressao\n");
+                    }else{
+                        printf("Resultado: %.2f\n",resultado);
+                    }
+                    
                 }else{
                     if(strlen(posfixa)==0){
                         printf("Defina a expressao primeiro\n");

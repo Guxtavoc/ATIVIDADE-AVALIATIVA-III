@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 int verificaPosfixa(char posfixa[]);
 int prio(char op){
@@ -17,6 +18,9 @@ int prio(char op){
         case '*':
         case '/':
         return 2;
+        case '#':
+        case '^':
+        return 3;
     }
     return -1;
 }
@@ -39,7 +43,7 @@ void converterExpressao(char posfixa[],char expressao[]){
                 destroi(&p);
                 return;
             }
-        }else if(expressao[i]=='+'||expressao[i]=='-'||expressao[i]=='*'||expressao[i]=='/'){ 
+        }else if(expressao[i]=='+'||expressao[i]=='-'||expressao[i]=='*'||expressao[i]=='/'||expressao[i]=='^'||expressao[i]=='#'){ 
             while(!vazio(p)&&prio(topo(p))>=prio(expressao[i])){
                 posfixa[j++]=desempilha(p);
             }
@@ -74,7 +78,7 @@ variaveis* recebeVariaveis(char posfixa[]){
                 }
             }
             if(!existe){
-                variaveis *temp=(variaveis*)realloc(letra, (size_t)(qtd + 1)*sizeof(variaveis));
+                variaveis *temp=(variaveis*)realloc(letra,(size_t)(qtd+1)*sizeof(variaveis));
                 letra=temp;
                 letra[qtd].variavel=posfixa[i];
                 printf("Digite o valor de %c: ",letra[qtd].variavel);
@@ -98,7 +102,7 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
                 }
             }
             i++;
-        }else if((posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/')&&posfixa[i]!='\0'){
+        }else if((posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/'||posfixa[i]=='^'||posfixa[i]=='#')&&posfixa[i]!='\0'){
             float a=desempilhaf(p);
             float b=desempilhaf(p);
             switch(posfixa[i]){
@@ -112,8 +116,25 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
                 empilhaf(b*a,p);
                 break;
                 case '/':
-                empilhaf(b/a,p);
+                if(a==0){
+                    printf("Divisao por zero\n");
+                    destroif(&p);
+                    return (float)NAN;
+                }else{
+                    empilhaf(b/a,p);
+                }
                 break;
+                case '^':
+                empilhaf((float)pow(b,a),p);
+                break;
+                case '#':
+                if(a<0){
+                    printf("Raiz de numero negativo\n");
+                    destroif(&p);
+                    return (float)NAN;
+                }else{
+                empilhaf((float)pow(b,1.0/a),p);
+                }
             }
             i++;
         }else{
@@ -131,7 +152,7 @@ int verificaPosfixa(char posfixa[]){
         posfixa[0]='\0';
         return 0;
     }
-    if(posfixa[j-1]=='+'||posfixa[j-1]=='-'||posfixa[j-1]=='*'||posfixa[j-1]=='/'){
+    if(posfixa[j-1]=='+'||posfixa[j-1]=='-'||posfixa[j-1]=='*'||posfixa[j-1]=='/'||posfixa[j-1]=='^'||posfixa[j-1]=='#'){
     }else{
         printf("Expressao invalida - Falta operador binario\n");
         posfixa[0]='\0';
@@ -141,7 +162,7 @@ int verificaPosfixa(char posfixa[]){
     for(int i=0;i<j;i++){
         if(isalpha(posfixa[i])){
             operando++;
-        }else if(posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/'){
+        }else if(posfixa[i]=='+'||posfixa[i]=='-'||posfixa[i]=='*'||posfixa[i]=='/'||posfixa[i]=='^'||posfixa[i]=='#'){
             operador++;
             if(operando<2){
                 printf("Expressao invalida - Falta operador binario\n");
