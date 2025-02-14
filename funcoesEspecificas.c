@@ -128,13 +128,19 @@ float avaliaExpressao(char posfixa[], variaveis *letra, int qtdVariaveis){
                 empilhaf((float)pow(b,a),p);
                 break;
                 case '#':
-                if(a<0){
-                    printf("Raiz de numero negativo\n");
+                if((a>0&&(fmod(a,2)!=0||b>=0))||(a<0&&b!=0)){
+                    float resultado=(float)pow(fabs(b),1.0/fabs(a));
+                    if(b<0&&fmod(a,2)!=0){
+                        empilhaf(-resultado,p);
+                    }else{
+                        empilhaf(resultado,p);
+                    }
+                }else{
+                    printf("Raiz indefinida\n");
                     destroif(&p);
                     return (float)NAN;
-                }else{
-                empilhaf((float)pow(b,1.0/a),p);
                 }
+                break;
             }
             i++;
         }else{

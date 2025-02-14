@@ -10,7 +10,7 @@ void menu(){
     posfixa[0]='\0';
     variaveis *letra=NULL;
     do{
-        printf("1 - Definicao da expressao\n2 - definicao do valor das variaveis\n3 - Avaliacao da expressao\n0 - Sair\n");
+        printf("1 - Definicao da expressao\n2 - definicao do valor das variaveis\n3 - Avaliacao da expressao\n4 - Informacoes adicionais\n0 - Sair\n");
         printf("Selecione a opcao que deseja: ");
         scanf("%d", &op);
         switch(op){
@@ -51,6 +51,12 @@ void menu(){
                     printf("Defina as variaveis primeiro\n");
                 }
                 }
+                break;
+                case 4:
+                printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * / ^ #\n");
+                printf("O simbolo # representa a raiz, sendo necessario indicar o exponte\nAs equacoes consideram apenas o resultado positivo de uma raiz com expoente par\n");
+                printf("O programa processa raizes negativas, contanto que o expoente seja impar \nExemplo: 4#2 = 2\nExenplo: -8#3 = -2\nA cada vez que uma expressao eh inserida as variaveis anteriores sao resetadas\n");
+                printf("O Programa nao aceita expressoes com colchetes ou chave\n");
                 break;
             case 0:
                 printf("Saindo...\n");
