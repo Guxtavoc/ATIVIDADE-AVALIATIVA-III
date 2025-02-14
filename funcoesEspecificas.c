@@ -1,3 +1,9 @@
+/*
+Projeto: Avaliação 3
+Arquivo: funcoesEspeficicas -> Funções específicas para a manipulação de expressões matemáticas
+Nome: Gustavo Curado e Daniel Barros
+Data: 13/02/2025
+*/
 #include "funcoesPilha.h"
 #include "funcoesPilhaf.h"
 #include "funcoesEspecificas.h"

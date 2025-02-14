@@ -1,3 +1,9 @@
+/*
+Projeto: Avaliação 3
+Arquivo: funcoesPilha.h -> Funções específicas para a manipulação de pilhas de caracteres
+Nome: Gustavo Curado e Daniel Barros
+Data: 13/02/2025
+*/
 typedef char Itemp;
 typedef struct pilha{
     int max;

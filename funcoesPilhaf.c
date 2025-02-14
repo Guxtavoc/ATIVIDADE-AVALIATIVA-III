@@ -1,3 +1,9 @@
+/*
+Projeto: Avaliação 3
+Arquivo: funcoesPilhaf.c -> Funções específicas para a manipulação de pilhas de floats
+Nome: Gustavo Curado e Daniel Barros
+Data: 13/02/2025
+*/
 #include "funcoesPilhaf.h"
 #include <stdio.h>
 #include <stdlib.h>

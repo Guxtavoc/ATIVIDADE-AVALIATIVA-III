@@ -1,3 +1,9 @@
+/*
+Projeto: Avaliação 3
+Arquivo: funcoesPilhaf.h -> Funções específicas para a manipulação de pilhas de floats
+Nome: Gustavo Curado e Daniel Barros
+Data: 13/02/2025
+*/
 typedef float Itemf;
 typedef struct pilhaf{
     int max;

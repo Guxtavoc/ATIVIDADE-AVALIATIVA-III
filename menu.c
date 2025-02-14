@@ -1,3 +1,9 @@
+/*
+Projeto: Avaliação 3
+Arquivo: menu.c -> Função que exibe o menu do programa e chama as funções de acordo com a escolha do usuário
+Nome: Gustavo Curado e Daniel Barros
+Data: 13/02/2025
+*/
 #include "menu.h"
 #include "funcoesEspecificas.h"
 #include <stdio.h>
@@ -15,7 +21,7 @@ void menu(){
         scanf("%d", &op);
         switch(op){
             case 1:
-                printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * / ^ #\n");
+                printf("Operacoes validas: + - * / ^ #\n");
                 do {
                     printf("Digite a expressao: ");
                     scanf("%s",expressao);
@@ -56,7 +62,7 @@ void menu(){
                 printf("A expressao deve ser digitada sem espacos\nVariaveis maiuculas e minusculas sao lidas individualmente\nOperacoes validas: + - * / ^ #\n");
                 printf("O simbolo # representa a raiz, sendo necessario indicar o exponte\nAs equacoes consideram apenas o resultado positivo de uma raiz com expoente par\n");
                 printf("O programa processa raizes negativas, contanto que o expoente seja impar \nExemplo: 4#2 = 2\nExenplo: -8#3 = -2\nA cada vez que uma expressao eh inserida as variaveis anteriores sao resetadas\n");
-                printf("O Programa nao aceita expressoes com colchetes ou chave\n");
+                printf("O Programa NAO aceita expressoes com colchetes ou chave\n\n");
                 break;
             case 0:
                 printf("Saindo...\n");
